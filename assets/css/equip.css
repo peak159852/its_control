@@ -1,0 +1,272 @@
+.main {
+  margin-left: 100px;
+}
+
+.tg {
+  margin: 0 auto;
+  max-height: 100px;
+  overflow-y: auto;
+  border: 1px solid #fff;
+  border-spacing: 1px;
+  /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.1); */
+  border-collapse: collapse;
+}
+
+
+table td {
+  padding: 10px;
+  background-color: #eee;
+  color: black;
+  border: 1.5px solid #fff;
+}
+
+table th {
+  border: 1.5px solid #fff;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px;
+}
+
+.search {
+  font-weight: 700;
+  padding-top: 50px;
+  text-align: center;
+  font-size: 48px;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.searchres {
+  font-size: 24px;
+  text-transform: uppercase;
+  letter-spacing: 2.4px;
+  line-height: 1.4;
+}
+
+.keyword {
+  text-align: center;
+  width: 200px;
+  margin-left: 10px;
+  height: 50px;
+}
+
+.th-main {
+  width: 200px;
+}
+
+.toggle-socket {
+  margin-left: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.connectview img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.toggle-socket {
+  width: 120px;
+  padding: 0;
+  margin: 10px 20px 10px 0;
+  font-weight: 600;
+  text-align: center;
+  line-height: 50px;
+  color: #FFF;
+  border-radius: 5px;
+  transition: all 0.2s;
+  background: #5DC8CD;
+}
+
+.toggle-socket:hover {
+  background: #01939A;
+}
+
+.re-num {
+  font-size: 48px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.re-num1 {
+  font-size: 24px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* #allping { display :none;} */
+
+.table-container {
+  background: white;
+  margin-top: 20px;
+  display: flex;
+  /* overflow-x: auto;  가로 스크롤 활성화 */
+  border: 1px solid #ddd;
+}
+
+.cctv-container {
+  flex: 1;
+  max-height: 550px;
+  overflow-y: auto;
+  border: 1px solid black;
+}
+
+.vds-container {
+  flex: 1;
+  max-height: 550px;
+  overflow-y: auto;
+  border: 1px solid black;
+}
+
+.lcs-container {
+  flex: 1;
+  max-height: 550px;
+  overflow-y: auto;
+  border: 1px solid black;
+}
+
+.chart-head {
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 1px solid #fff;
+  font-size: 25px;
+  color: black;
+}
+
+
+.buttons {
+  margin: 10%;
+  text-align: center;
+}
+
+.btn-hover {
+  width: 60px;
+  height: 20px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  margin: 5px;
+
+  text-align: center;
+  border: none;
+  background-size: 300% 100%;
+
+  border-radius: 50px;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.btn-hover:hover {
+  background-position: 100% 0;
+  -o-transition: all .4s ease-in-out;
+  -webkit-transition: all .4s ease-in-out;
+  transition: all .4s ease-in-out;
+}
+
+.btn-hover.color {
+  background-image: linear-gradient(to right, #29323c, #485563, #2b5876, #4e4376);
+  box-shadow: 0 4px 15px 0 rgba(45, 54, 65, 0.75);
+}
+
+.container {
+  width: 100%;
+  margin: 20px auto;
+  display: flex;           /* 수평 중앙 정렬을 위해 Flexbox 사용 */
+  flex-direction: column; /* 세로로 배치 */
+  align-items: center; 
+  /* justify-content: center; */
+}
+.accordion-item {
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ddd;
+  margin: 5px;
+  cursor: pointer;
+  padding: 10px;
+  background: linear-gradient(145deg, #4e73df, #2a4b95); 
+  color: white;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.accordion-item:hover {
+  background: linear-gradient(145deg, #3b60a5, #1d3d75); /* Hover 시 색상 변경 */
+}
+
+.accordion-content {
+  display: none;
+  padding: 10px;
+  width: 100%;
+  max-width: 600px;
+  background-color: #f9f9f9;
+  border-top: 1px solid #ddd;
+  animation: slideDown 0.3s ease-out;
+  /* 콘텐츠 열 때 애니메이션 */
+  max-height: 300px;
+  /* 최대 높이 설정 */
+  overflow-y: auto;
+  /* 넘칠 경우 스크롤 추가 */
+}
+.accordion-item .icon {
+  font-size: 20px;
+  transition: transform 0.3s ease; /* 아이콘 회전 애니메이션 */
+}
+
+/* 아코디언이 열릴 때 부드러운 애니메이션 효과 */
+@keyframes slideDown {
+  0% {
+    height: 0;
+    opacity: 0;
+  }
+
+  100% {
+    height: auto;
+    opacity: 1;
+  }
+}
+
+/* 텍스트 강조 스타일 */
+.accordion-item p {
+  margin: 0;
+}
+
+        /* 버튼 스타일 */
+        .accordion-button {
+          display: flex;          /* 플렉스 박스 사용 */
+          align-items: center;    /* 아이콘과 텍스트를 세로로 정렬 */
+          padding: 8px 15px;
+          margin-left: 15px;
+          margin-right: 15px;
+          font-size: 16px;
+          background-color: #4CAF50;
+          color: white;
+          border: none;
+          cursor: pointer;
+          border-radius: 5px;
+          transition: background-color 0.3s ease;
+          gap: 4px;  /* 버튼 텍스트와 아이콘 사이의 간격을 줄여줍니다 */
+      }
+
+      .accordion-button:hover {
+          background-color: #45a049;
+      }
+
+      /* 버튼과 아이콘 간격을 최소화 */
+      .accordion-button .icon {
+          margin-left: 10px; /* 아이콘 왼쪽 여백을 없앰 */
+      }
