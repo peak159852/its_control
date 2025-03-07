@@ -1,12 +1,11 @@
 <?php
-session_start();
+include('session_timeout.php');
 if (!isset($_SESSION['username'])) {
-    echo "<script>location.replace('../loginpage.php');</script>";
+	echo "<script>location.replace('../loginpage.php');</script>";
 } else {
-    $username = $_SESSION['username'];
-    $name = $_SESSION['name'];
+	$username = $_SESSION['username'];
+	$name = $_SESSION['name'];
 }
-
 $conn = mysqli_connect('localhost', 'root', 'vksek1333');
 mysqli_query($conn, "set session character_set_connection=utf8;");
 mysqli_query($conn, "set session character_set_results=utf8;");
@@ -34,8 +33,7 @@ window.setTimeout('window.location.reload()',10000);
     <!--style.css-->
     <link rel="stylesheet" href="../assets/css/style.css">
     <!-- ICONS -->
-    <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="../assets/img/favicon.png">
+    <link rel="shortcut icon" href="#">
 </head>
 
 <body>
@@ -51,80 +49,189 @@ window.setTimeout('window.location.reload()',10000);
                 echo '<div class= "nowtime"> 현재시간 :' . $now . '</div>'; ?>
 
             </div>
+            <div class="accordion-item">VMS<button class="accordion-button">펼치기</button>
+            <span class="icon">➤</span>
         </div>
-        <table id="allchart" class="tg">
-            <thead>
-                <tr>
-                    <th>
-                        <span id=c2>기기 이름</span>
-                    </th>
-                    <th>
-                        <span id=c2>이정</span>
-                    </th>
-                    <th>
-                        <span id=c2>제어기 아이피</span>
-                    </th>
-                    <th>
-                        <span id=c2>작동상태</span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                //세션에 캐싱 데이터가있으면  그대로사용
-                if (isset($_SESSION['cached_data1']) && (time() - $_SESSION['cache_time1'] < 60)) {
-                    echo $_SESSION['cached_data1'];
-                    exit;
-                }
-                include_once "../ping.php";
-                $res = mysqli_query($conn, "SELECT mName,mMile,mIP FROM lcs_vms_conf");
-                $data1 = "";
+        <div id="vms" class="accordion-content">
+            <table id="allchart" class="tg">
+                <thead>
+                    <tr>
+                        <th>
+                            <span id=c2>기기 이름</span>
+                        </th>
+                        <th>
+                            <span id=c2>이정</span>
+                        </th>
+                        <th>
+                            <span id=c2>제어기 아이피</span>
+                        </th>
+                        <th>
+                            <span id=c2>작동상태</span>
+                        </th>
+                        <th>
+                            <span id=c2>원격</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $result = mysqli_query($conn, "SELECT mName,mMile,mIP FROM lcs_vms_conf ORDER BY mMile ASC");
 
-                while ($row = mysqli_fetch_array($res)) {
-
-                    $imgsrc;
-                    $host = $row['mIP'];
-
-                    $result = ping($host);
-                    // $result = 1;
-                    if ($result === 1) {
-                        $imgsrc = "../images/greendot.png";
+                    $hosts = [];
+                    $miles = [];
+                    $names = [];
+                    $corps = [];
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $hosts[] = $row['mIP'];
+                            $miles[] = $row['mMile'];
+                            $names[] = $row['mName'];
+                        }
                     } else {
-                        $imgsrc = "../images/reddot.png";
-
+                        echo "No hosts found";
                     }
 
-                    if ($imgsrc === "../images/reddot.png") {
-                        $data1 .= '<tr id="falping" name="pings" class="falping" ><td> ' . $row['mName'] . '</td>' . '<td>' . $row['mMile'] . 'k</td>' . '<td>' . $row['mIP'] . '</td>' . '<td class="connectview"><img id= "connectview" src=' . $imgsrc . '></td> 
-                            <td><form action="../func/vnc.php" target="vncWindow" method="post"><input type="hidden" name="serverIP" value="' . $row['mIP'] . '"><button type="submit">원격 보기</button></form></td></tr>';
-                    } else {
-                        $data1 .= '<tr id="allping" name="pings" class="allping"><td>' . $row['mName'] . '</td>' .
-                            '<td>' . $row['mMile'] . 'k</td>' .
-                            '<td>' . $row['mIP'] . '</td>' .
-                            '<td class="connectview"><img id= "connectview" src=' . $imgsrc . '></td>' .
-                            '<td>
-                            <form action="../func/vnc.php" target="vncWindow" method="post">
-                            <input type="hidden" name="serverIP" value="' . $row['mIP'] . '">
-                            <button type="submit">원격 보기</button>
-                            </form>
-                            </td>
-                            </tr>';
+                    // cURL multi 핸들 생성
+                    $multi_handle = curl_multi_init();
+                    $curl_handles = [];
+
+                    foreach ($hosts as $index => $host) {
+                        // cURL 세션 초기화
+                        $curl_handles[$index] = curl_init();
+
+                        // 핑을 위해 호출할 URL 세팅 (여기서 ping.php 파일을 호출합니다)
+                        curl_setopt($curl_handles[$index], CURLOPT_URL, "localhost/ping.php?host=" . urlencode($host));
+                        curl_setopt($curl_handles[$index], CURLOPT_RETURNTRANSFER, true);
+
+                        // multi 핸들에 추가
+                        curl_multi_add_handle($multi_handle, $curl_handles[$index]);
                     }
 
+                    // 요청 실행
+                    $running = null;
+                    do {
+                        curl_multi_exec($multi_handle, $running);
+                    } while ($running > 0);
 
+                    // 응답 처리
+                    foreach ($curl_handles as $index => $ch) {
+                        $response = curl_multi_getcontent($ch);
+                        // 핑 결과 출력
+                        if ($response === 1) {
+                            $imgsrc = "../images/greendot.png";
+                        } else {
+                            $imgsrc = "../images/reddot.png";
 
-                }
+                        }
+                        if (stripos($names[$index], "M") !== false) {
+                            echo '<tr id="falping" name="pings" ><td> ' . $names[$index] . '</td>' . '<td>' . $miles[$index] . 'k</td>' . '<td>' . $hosts[$index] . '</td>' . '<td class="connectview"><img id= "connectview" src=' . $imgsrc . '></td> 
+                        <td><form action="../func/vnc.php" target="vncWindow" method="post"><input type="hidden" name="serverIP" value="' . $hosts[$index] . '"><button type="submit">원격 보기</button></form></td></tr>';
+                        }
+                        // cURL 핸들 닫기
+                        curl_multi_remove_handle($multi_handle, $ch);
+                        curl_close($ch);
+                    }
 
-                $_SESSION['cached_data1'] = $data1;
-                $_SESSION['cache_time1'] = time();
-                echo $data1;
+                    // multi 핸들 종료
+                    curl_multi_close($multi_handle);
+                    ?>
+                </tbody>
 
-                ?>
-            </tbody>
-        </table>
-
+            </table>
         </div>
+        <div class="accordion-item">LCS<button class="accordion-button">펼치기</button>
+            <span class="icon">➤</span>
+        </div>
+        <div id="lcs" class="accordion-content">
+            <table id="allchart" class="tg">
+                <thead>
+                    <tr>
+                        <th>
+                            <span id=c2>기기 이름</span>
+                        </th>
+                        <th>
+                            <span id=c2>이정</span>
+                        </th>
+                        <th>
+                            <span id=c2>제어기 아이피</span>
+                        </th>
+                        <th>
+                            <span id=c2>작동상태</span>
+                        </th>
+                        <th>
+                            <span id=c2>원격</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $result = mysqli_query($conn, "SELECT mName,mMile,mIP FROM lcs_vms_conf ORDER BY mMile ASC");
 
+                    $hosts = [];
+                    $miles = [];
+                    $names = [];
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $hosts[] = $row['mIP'];
+                            $miles[] = $row['mMile'];
+                            $names[] = $row['mName'];
+                        }
+                    } else {
+                        echo "No hosts found";
+                    }
+
+                    $conn->close();
+
+                    // cURL multi 핸들 생성
+                    $multi_handle = curl_multi_init();
+                    $curl_handles = [];
+
+                    foreach ($hosts as $index => $host) {
+                        // cURL 세션 초기화
+                        $curl_handles[$index] = curl_init();
+
+                        // 핑을 위해 호출할 URL 세팅 (여기서 ping.php 파일을 호출합니다)
+                        curl_setopt($curl_handles[$index], CURLOPT_URL, "localhost/ping.php?host=" . urlencode($host));
+                        curl_setopt($curl_handles[$index], CURLOPT_RETURNTRANSFER, true);
+
+                        // multi 핸들에 추가
+                        curl_multi_add_handle($multi_handle, $curl_handles[$index]);
+                    }
+
+                    // 요청 실행
+                    $running = null;
+                    do {
+                        curl_multi_exec($multi_handle, $running);
+                    } while ($running > 0);
+
+                    // 응답 처리
+                    foreach ($curl_handles as $index => $ch) {
+                        $response = curl_multi_getcontent($ch);
+                        // 핑 결과 출력
+                        if ($response === 1) {
+                            $imgsrc = "../images/greendot.png";
+                        } else {
+                            $imgsrc = "../images/reddot.png";
+
+                        }
+                        if (stripos($names[$index], "M") === false) {
+                            echo '<tr id="falping" name="pings" ><td> ' . $names[$index] . '</td>' . '<td>' . $miles[$index] . 'k</td>' . '<td>' . $hosts[$index] . '</td>' . '<td class="connectview"><img id= "connectview" src=' . $imgsrc . '></td> 
+                        <td><form action="../func/vnc.php" target="vncWindow" method="post"><input type="hidden" name="serverIP" value="' . $hosts[$index] . '"><button type="submit">원격 보기</button></form></td></tr>';
+                        }
+                        // cURL 핸들 닫기
+                        curl_multi_remove_handle($multi_handle, $ch);
+                        curl_close($ch);
+                    }
+
+                    // multi 핸들 종료
+                    curl_multi_close($multi_handle);
+                    ?>
+                </tbody>
+
+            </table>
+        </div>
+        </div>
+        
     </section><!--/.welcome-hero-->
     <!-- MAIN -->
 

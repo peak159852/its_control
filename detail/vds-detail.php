@@ -1,12 +1,11 @@
 <?php
-session_start();
+include('session_timeout.php');
 if (!isset($_SESSION['username'])) {
-    echo "<script>location.replace('../loginpage.php');</script>";
+	echo "<script>location.replace('../loginpage.php');</script>";
 } else {
-    $username = $_SESSION['username'];
-    $name = $_SESSION['name'];
+	$username = $_SESSION['username'];
+	$name = $_SESSION['name'];
 }
-
 $conn = mysqli_connect('localhost', 'root', 'vksek1333');
 mysqli_query($conn, "set session character_set_connection=utf8;");
 mysqli_query($conn, "set session character_set_results=utf8;");

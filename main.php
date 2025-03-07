@@ -1,11 +1,12 @@
 <?php
-session_start();
+include('session_timeout.php');
 if (!isset($_SESSION['username'])) {
 	echo "<script>location.replace('loginpage.php');</script>";
 } else {
 	$username = $_SESSION['username'];
 	$name = $_SESSION['name'];
 }
+
 ?>
 
 
