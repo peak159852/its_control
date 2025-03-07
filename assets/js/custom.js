@@ -260,32 +260,29 @@ $(document).ready(function () {
 	});
 });
 
+// 메모기능
+// $(document).ready(function () {
+// 	$("#cctv-memo").off("click").on("click", function () {
+// 		var newWindow = window.open("detail/cctv-memo.php");
+// 		if (!newWindow) {
+// 			alert("팝업 차단이 되어 있어 새 창을 열 수 없습니다!");
+// 		}
+// 	});
+// 	$("#lcs-memo").off("click").on("click", function () {
+// 		var newWindow = window.open("detail/lcs-memo.php");
+// 		if (!newWindow) {
+// 			alert("팝업 차단이 되어 있어 새 창을 열 수 없습니다!");
+// 		}
+// 	});
+// 	$("#vds-memo").off("click").on("click", function () {
+// 		var newWindow = window.open("detail/vds-memo.php");
+// 		if (!newWindow) {
+// 			alert("팝업 차단이 되어 있어 새 창을 열 수 없습니다!");
+// 		}
+// 	});
+// });
 
-$(document).ready(function () {
-	$("#cctv-memo").off("click").on("click", function () {
-		var newWindow = window.open("detail/cctv-memo.php");
-		if (!newWindow) {
-			alert("팝업 차단이 되어 있어 새 창을 열 수 없습니다!");
-		}
-	});
-	$("#lcs-memo").off("click").on("click", function () {
-		var newWindow = window.open("detail/lcs-memo.php");
-		if (!newWindow) {
-			alert("팝업 차단이 되어 있어 새 창을 열 수 없습니다!");
-		}
-	});
-	$("#vds-memo").off("click").on("click", function () {
-		var newWindow = window.open("detail/vds-memo.php");
-		if (!newWindow) {
-			alert("팝업 차단이 되어 있어 새 창을 열 수 없습니다!");
-		}
-	});
-});
 
-
-$(document).ready(function () {
-
-});
 // 아코디언 효과 구현
 document.querySelectorAll('.accordion-button').forEach(function (button, index) {
 	button.addEventListener('click', function () {
@@ -297,6 +294,7 @@ document.querySelectorAll('.accordion-button').forEach(function (button, index) 
 			content.style.display = 'block';
 			icon.style.transform = 'rotate(90deg)';
 			button.textContent = '닫기'; // 버튼 텍스트 변경
+			
 		} else {
 			content.style.display = 'none';
 			icon.style.transform = 'rotate(0deg)';

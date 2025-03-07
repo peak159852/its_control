@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['username'])) {
-    echo "<script>location.replace('../login.php');</script>";
+    echo "<script>location.replace('../loginpage.php');</script>";
 } else {
     $username = $_SESSION['username'];
     $name = $_SESSION['name'];

@@ -76,13 +76,12 @@ if (!isset($_SESSION['username'])) {
 
 				<div class="cctv-container">
 					<div class="chart-head">cctv </div>
-						<button id="cctv-detail" class="btn-hover color">자세히</button>
-						<button class="btn-hover color" id="refresh-cctv">새로고침</button>
-						<button id="cctv-memo" class="btn-hover color">메모</button>
+					<button id="cctv-detail" class="btn-hover color">자세히</button>
+					<button class="btn-hover color" id="refresh-cctv">새로고침</button>
 					<table id="allchart" class="tg">
 						<thead>
 							<tr>
-								<th width = 200px;>
+								<th width=200px;>
 									<span id=c2>위치명</span>
 								</th>
 								<th>
@@ -95,18 +94,18 @@ if (!isset($_SESSION['username'])) {
 							</tr>
 						</thead>
 						<tbody id="cctvtable">
-
+							
 						</tbody>
 					</table>
 				</div>
 				<div class="lcs-container">
-					<div class="chart-head">vms,lcs</div><button id="lcs-detail" class="btn-hover color">자세히</button><button
-						class="btn-hover color" id="refresh-lcs">새로고침</button>
-						<button id="lcs-memo" class="btn-hover color">메모</button>
+					<div class="chart-head">vms,lcs</div><button id="lcs-detail"
+						class="btn-hover color">자세히</button><button class="btn-hover color"
+						id="refresh-lcs">새로고침</button>
 					<table id="allchart" class="tg">
 						<thead>
 							<tr>
-								<th width = 200px;>
+								<th width=200px;>
 									<span id=c2>위치명</span>
 								</th>
 								<th>
@@ -127,11 +126,10 @@ if (!isset($_SESSION['username'])) {
 					<div class="chart-head">vds,avc,dsrc</div><button id="vds-detail"
 						class="btn-hover color">자세히</button><button id="refresh-vds"
 						class="btn-hover color">새로고침</button>
-						<button id="vds-memo" class="btn-hover color">메모</button>
 					<table id="allchart" class="tg">
 						<thead>
-							<tr >
-								<th width = 200px;>
+							<tr>
+								<th width=200px;>
 									<span id=c2>위치명</span>
 								</th>
 								<th>
@@ -164,31 +162,31 @@ if (!isset($_SESSION['username'])) {
 	< <!--footer start-->
 		<footer id="footer" class="footer">
 
-				<div class="footer-menu">
-					<div class="row">
-						<div class="col-sm-3">
-							<div class="navbar-header">
-								<a class="navbar-brand" href="index.html">한국정보기술(주)</a>
-							</div><!--/.navbar-header-->
+			<div class="footer-menu">
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="navbar-header">
+							<a class="navbar-brand" href="index.html">한국정보기술(주)</a>
+						</div><!--/.navbar-header-->
+					</div>
+				</div>
+			</div>
+			<div class="hm-footer-copyright">
+				<div class="row">
+					<div class="col-sm-5">
+						<p>
+							&copy;copyright. designed and developed by Lee
+						</p><!--/p-->
+					</div>
+					<div class="col-sm-7">
+						<div class="footer-social">
+							<span><i class="fa fa-phone"> +82 (010) 3775 5496</i></span>
+
 						</div>
 					</div>
 				</div>
-				<div class="hm-footer-copyright">
-					<div class="row">
-						<div class="col-sm-5">
-							<p>
-								&copy;copyright. designed and developed by Lee
-							</p><!--/p-->
-						</div>
-						<div class="col-sm-7">
-							<div class="footer-social">
-								<span><i class="fa fa-phone"> +82 (010) 3775 5496</i></span>
 
-							</div>
-						</div>
-					</div>
-
-				</div><!--/.hm-footer-copyright-->
+			</div><!--/.hm-footer-copyright-->
 
 
 			<div id="scroll-Top">
