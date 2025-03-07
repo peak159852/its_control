@@ -31,10 +31,10 @@
             <form method="post" action="register.php" class="form" id="form1">
                 <h2 class="form__title">Sorry,<br> Please contact manager</h2>
                 <p>010-3775-5496</p>
-                <!-- <input type="text" placeholder="User" class="input" /> -->
-                <!-- <input type="text" name="username" placeholder="Id" class="input" />
-                <input type="password" name ="password"placeholder="Password" class="input" />
-                <button class="btn">Sign Up</button> -->
+                <!-- <input type="text" placeholder="User" class="input" />  -->
+                 <input type="text" name="id" placeholder="Id" class="input" />
+                <input type="password" name ="pw"placeholder="Password" class="input" />
+                <button class="btn">Sign Up</button>
             </form>
 
         </div>
