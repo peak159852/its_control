@@ -1,5 +1,5 @@
 <?php
-include('session_timeout.php');
+include('../session_timeout.php');
 if (!isset($_SESSION['username'])) {
 	echo "<script>location.replace('../loginpage.php');</script>";
 } else {
@@ -80,7 +80,6 @@ window.setTimeout('window.location.reload()',10000);
                     $hosts = [];
                     $miles = [];
                     $names = [];
-                    $corps = [];
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             $hosts[] = $row['mIP'];

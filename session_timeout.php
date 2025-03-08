@@ -11,7 +11,7 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY']) >
     header("Location: loginpage.php");  // 로그인 페이지로 리디렉션
     exit();
 }
-echo "Last Activity: " . (isset($_SESSION['LAST_ACTIVITY']) ? date('Y-m-d H:i:s', $_SESSION['LAST_ACTIVITY']) : 'No Activity Yet');
+// echo "Last Activity: " . (isset($_SESSION['LAST_ACTIVITY']) ? date('Y-m-d H:i:s', $_SESSION['LAST_ACTIVITY']) : 'No Activity Yet');
 // 마지막 활동 시간 갱신
 $_SESSION['LAST_ACTIVITY'] = time();
 ?>

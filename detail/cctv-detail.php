@@ -1,5 +1,5 @@
 <?php
-include('session_timeout.php');
+include('../session_timeout.php');
 if (!isset($_SESSION['username'])) {
 	echo "<script>location.replace('../loginpage.php');</script>";
 } else {
